@@ -1,5 +1,9 @@
-# Uncomment this line to define a global platform for your project
-# platform :ios, '11.0'
+#include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"
+
+platform :ios, '12.0'
+
+# 💡 CocoaPods: evitar errores de rutas largas en macOS
+install! 'cocoapods', :disable_input_output_paths => true
 
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
