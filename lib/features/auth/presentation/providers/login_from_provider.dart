@@ -1,6 +1,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:formz/formz.dart';
 import 'package:teslo_shop/features/shared/infrastructions/inputs/inputs.dart';
+
+
+//! 3- Como se va a consumir el provider  - consume afuera
+final loginFormProvider = StateNotifierProvider.autoDispose<LoginFromNotifier,LoginFromState>((ref) {
+  return LoginFromNotifier();
+});
+
+
 //! 1- Crear el sate del provider 
 class LoginFromState {
     final bool isPosting;
@@ -97,7 +105,3 @@ class LoginFromNotifier extends StateNotifier<LoginFromState> {
 
 
 
-//! 3- Como se va a consumir el provider  - consume afuera
-final LoginFormProvider = StateNotifierProvider.autoDispose<LoginFromNotifier,LoginFromState>((ref) {
-  return LoginFromNotifier();
-});
