@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -52,9 +51,8 @@ class _LoginForm extends ConsumerWidget {
   const _LoginForm();
 
   @override
-  Widget build(BuildContext context,WidgetRef ref) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final loginForm = ref.watch(loginFormProvider);
-
 
     final textStyles = Theme.of(context).textTheme;
 
@@ -65,24 +63,20 @@ class _LoginForm extends ConsumerWidget {
           const SizedBox(height: 50),
           Text('Login', style: textStyles.titleLarge),
           const SizedBox(height: 90),
-           CustomTextFormField(
+          CustomTextFormField(
             label: 'Correo',
             keyboardType: TextInputType.emailAddress,
-
-            onChanged: ref.read(loginFormProvider.notifier).onEmailChanges ,
-            errorMessage: loginForm.isFormPosted ?
-            loginForm.email.errorMessage : null,
-            
+            onChanged: ref.read(loginFormProvider.notifier).onEmailChanges,
+            errorMessage:
+                loginForm.isFormPosted ? loginForm.email.errorMessage : null,
           ),
           const SizedBox(height: 30),
-           CustomTextFormField(
+          CustomTextFormField(
             label: 'Contraseña',
             obscureText: true,
-
-            onChanged: ref.read(loginFormProvider.notifier).onPasswordChanges ,
-            errorMessage:loginForm.isPosting ?
-             loginForm.password.errorMessage : null,
-
+            onChanged: ref.read(loginFormProvider.notifier).onPasswordChanges,
+            errorMessage:
+                loginForm.isPosting ? loginForm.password.errorMessage : null,
           ),
           const SizedBox(height: 30),
           SizedBox(
@@ -92,9 +86,7 @@ class _LoginForm extends ConsumerWidget {
                 text: 'Ingresar',
                 buttonColor: Colors.black,
                 onPressed: () {
-
                   ref.read(loginFormProvider.notifier).onFormSumit();
-                  
                 },
               )),
           const Spacer(flex: 2),
