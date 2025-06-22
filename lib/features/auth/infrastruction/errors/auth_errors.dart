@@ -1,4 +1,3 @@
+class WrongCredentials implements Exception {}
 
-
-class WrongCredentials implements Exception{}
-class InvalidToken implements Exception{}
+class InvalidToken implements Exception {}

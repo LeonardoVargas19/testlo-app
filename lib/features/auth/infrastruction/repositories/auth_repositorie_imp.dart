@@ -5,10 +5,8 @@ import '../../domain/domain.dart';
 class AuthRepositorieImp extends AuthRepository {
   final AuthDatasource datasource;
 
-  AuthRepositorieImp(
-    AuthDatasource? datasource
-  ):datasource= datasource ?? AuthDataSourceImplement();
-
+  AuthRepositorieImp([AuthDatasource? datasource])
+      : datasource = datasource ?? AuthDataSourceImplement();
 
   @override
   Future<User> checkAuthStatus(String token) {
@@ -17,7 +15,7 @@ class AuthRepositorieImp extends AuthRepository {
 
   @override
   Future<User> login(String email, String password) {
-   return datasource.login(email, password);
+    return datasource.login(email, password);
   }
 
   @override
