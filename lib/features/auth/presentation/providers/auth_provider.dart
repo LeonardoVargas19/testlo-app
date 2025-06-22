@@ -14,16 +14,21 @@ final authProvider = StateNotifierProvider<AuthNotifier,AuthState>((ref) {
   return AuthNotifier(authRepository: authRepositorie);
 });
 
-
-
-
-
   class AuthNotifier extends StateNotifier<AuthState> {
     final AuthRepository authRepository;
     AuthNotifier({ required this.authRepository}): super(AuthState());
 
-    void loginUser ( String email , String password)async{
-
+    Future <void> loginUser ( String email , String password)async{
+        await Future.delayed(const Duration(milliseconds: 500));
+       try {
+          final user = await authRepository.login(email, password);
+           _setLogUser(user);
+       }on WrongCredentials {
+          logout( 'Credenciales no son correctas');
+       } catch (e) {
+         logout( 'Error no controlado');
+       }
+       
     }
 
     void registerUser ( String email , String password)async{
@@ -33,7 +38,22 @@ final authProvider = StateNotifierProvider<AuthNotifier,AuthState>((ref) {
 
     }
     
+    Future<void> logout([String ? errorMessages]) async{
+     // TODO : limipiar o boorrar el token 
+     state = state.copyWith(
+        authStatus: AuthStatus.notAuthenticated,
+        user: null,
+        errorMessages: errorMessages
+     );
 
+    }
+      void _setLogUser( User user){
+        // TODO: NECESITO GUARDAR EL TOKEN EN EL DISPOSITIVO
+        state = state.copyWith(
+          user: user,
+          authStatus: AuthStatus.authenticated,
+        );
+      }
     
   }
 
