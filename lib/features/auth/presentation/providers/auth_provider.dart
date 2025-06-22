@@ -1,11 +1,7 @@
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:teslo_shop/features/auth/domain/domain.dart';
 import 'package:teslo_shop/features/auth/domain/repositories/auth_repositorie.dart';
 import 'package:teslo_shop/features/auth/infrastruction/infrastruction.dart';
-
-
-
 
 
 final authProvider = StateNotifierProvider<AuthNotifier,AuthState>((ref) {
@@ -25,8 +21,10 @@ final authProvider = StateNotifierProvider<AuthNotifier,AuthState>((ref) {
            _setLogUser(user);
        }on WrongCredentials {
           logout( 'Credenciales no son correctas');
-       } catch (e) {
-         logout( 'Error no controlado');
+       } on ConnectionTimeout {
+         logout( 'Timeout');
+       } catch (e){
+        logout( 'Error ');
        }
        
     }
