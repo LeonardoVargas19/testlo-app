@@ -6,12 +6,9 @@ import 'package:teslo_shop/features/shared/infrastructions/inputs/inputs.dart';
 //! 3- Como se va a consumir el provider  - consume afuera
 final loginFormProvider =
     StateNotifierProvider.autoDispose<LoginFromNotifier, LoginFromState>((ref) {
+  final loginUserCallback = ref.watch(authProvider.notifier).loginUser;
 
-      final loginUserCallback = ref.watch(authProvider.notifier).loginUser;
-
-  return LoginFromNotifier(
-    loginUserCallback: loginUserCallback
-  );
+  return LoginFromNotifier(loginUserCallback: loginUserCallback);
 });
 
 //! 1- Crear el sate del provider
@@ -59,11 +56,10 @@ class LoginFromState {
 
 //! 2. Como implementar el notifier
 class LoginFromNotifier extends StateNotifier<LoginFromState> {
-  final Function(String,String) loginUserCallback;
+  final Function(String, String) loginUserCallback;
 
-  LoginFromNotifier({
-    required this.loginUserCallback
-  }) : super(LoginFromState());
+  LoginFromNotifier({required this.loginUserCallback})
+      : super(LoginFromState());
 
   onEmailChanges(String value) {
     final newEmail = Email.dirty(value);
@@ -78,10 +74,10 @@ class LoginFromNotifier extends StateNotifier<LoginFromState> {
         isValid: Formz.validate([newPassword, state.email]));
   }
 
-  onFormSumit() async{
+  onFormSumit() async {
     _touchEveryField();
     if (!state.isValid) return;
-    await loginUserCallback(state.email.value,state.password.value);
+    await loginUserCallback(state.email.value, state.password.value);
     print(state);
   }
 
