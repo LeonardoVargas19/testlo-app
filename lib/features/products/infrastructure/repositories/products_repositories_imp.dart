@@ -1,12 +1,9 @@
-
 import 'package:teslo_shop/features/products/domain/domian.dart';
 
-class ProductsRepositoriesImp extends ProductRepositories{
-  final ProductsDatasources datasources ;
+class ProductsRepositoriesImp extends ProductRepositories {
+  final ProductsDatasources datasources;
 
-  ProductsRepositoriesImp( this.datasources);
-
-
+  ProductsRepositoriesImp(this.datasources);
 
   @override
   Future<Product> createProduct(Map<String, dynamic> productLike) {
@@ -15,11 +12,11 @@ class ProductsRepositoriesImp extends ProductRepositories{
 
   @override
   Future<Product> getProductById(String id) {
-      return datasources.getProductById(id);
+    return datasources.getProductById(id);
   }
 
   @override
   Future<List<Product>> getProductsByPages({int limit = 10, int offset = 0}) {
-    return datasources.getProductsByPages(limit: limit,offset: offset);
+    return datasources.getProductsByPages(limit: limit, offset: offset);
   }
 }

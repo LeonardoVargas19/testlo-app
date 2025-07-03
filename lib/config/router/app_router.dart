@@ -36,23 +36,23 @@ final goRouterProvider = Provider((ref) {
         builder: (context, state) => const ProductsScreen(),
       ),
     ],
-
-    redirect:(context, state) {
+    redirect: (context, state) {
       final isGoingTo = state.subloc;
       final autStatus = goRounterNotifier.authStatus;
 
-      if(isGoingTo == '/splash' && autStatus == AuthStatus.checking) return null;
-      
-      if( autStatus == AuthStatus.notAuthenticated){
-        if(isGoingTo == '/' || isGoingTo == '/register') return null;
+      if (isGoingTo == '/splash' && autStatus == AuthStatus.checking)
+        return null;
+
+      if (autStatus == AuthStatus.notAuthenticated) {
+        if (isGoingTo == '/' || isGoingTo == '/register') return null;
         return '/login';
       }
-      if( autStatus == AuthStatus.authenticated){
-        if(isGoingTo == '/login' || isGoingTo == '/register' || isGoingTo == '/splash') return '/';
-        
+      if (autStatus == AuthStatus.authenticated) {
+        if (isGoingTo == '/login' ||
+            isGoingTo == '/register' ||
+            isGoingTo == '/splash') return '/';
       }
       return null;
-
     },
   );
 });

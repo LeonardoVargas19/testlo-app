@@ -1,17 +1,9 @@
-
-
 import 'package:teslo_shop/features/products/domain/entities/product.dart';
 
 abstract class ProductsDatasources {
-    
-    Future<List<Product>> getProductsByPages({int limit = 10, int offset = 0});
+  Future<List<Product>> getProductsByPages({int limit = 10, int offset = 0});
 
-    Future<Product> getProductById(String id);
+  Future<Product> getProductById(String id);
 
-    Future<Product> createProduct(Map<String,dynamic> productLike);
-    
-    
-
-
-
+  Future<Product> createProduct(Map<String, dynamic> productLike);
 }

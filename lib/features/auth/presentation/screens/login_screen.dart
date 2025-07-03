@@ -49,7 +49,6 @@ class LoginScreen extends StatelessWidget {
   }
 }
 
-
 class _LoginForm extends ConsumerStatefulWidget {
   const _LoginForm();
 
@@ -92,19 +91,18 @@ class _LoginFormState extends ConsumerState<_LoginForm> {
             label: 'Correo',
             keyboardType: TextInputType.emailAddress,
             onChanged: ref.read(loginFormProvider.notifier).onEmailChanges,
-            errorMessage: loginForm.isFormPosted
-                ? loginForm.email.errorMessage
-                : null,
+            errorMessage:
+                loginForm.isFormPosted ? loginForm.email.errorMessage : null,
           ),
           const SizedBox(height: 30),
           CustomTextFormField(
             label: 'Contraseña',
             obscureText: true,
             onChanged: ref.read(loginFormProvider.notifier).onPasswordChanges,
-            onFieldSubmitted: ( _ ) => ref.read(loginFormProvider.notifier).onFormSumit() ,
-            errorMessage: loginForm.isPosting
-                ? loginForm.password.errorMessage
-                : null,
+            onFieldSubmitted: (_) =>
+                ref.read(loginFormProvider.notifier).onFormSumit(),
+            errorMessage:
+                loginForm.isPosting ? loginForm.password.errorMessage : null,
           ),
           const SizedBox(height: 30),
           SizedBox(
