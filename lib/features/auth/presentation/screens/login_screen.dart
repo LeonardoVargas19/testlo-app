@@ -101,6 +101,7 @@ class _LoginFormState extends ConsumerState<_LoginForm> {
             label: 'Contraseña',
             obscureText: true,
             onChanged: ref.read(loginFormProvider.notifier).onPasswordChanges,
+            onFieldSubmitted: ( _ ) => ref.read(loginFormProvider.notifier).onFormSumit() ,
             errorMessage: loginForm.isPosting
                 ? loginForm.password.errorMessage
                 : null,
