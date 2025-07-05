@@ -1,5 +1,20 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:teslo_shop/features/products/domain/domian.dart';
+import 'package:teslo_shop/features/products/presentation/providers/products_repositories_provider.dart';
+//Provider
+final prouductProvider = StateNotifierProvider<ProducsNotifier,ProductsState>((ref) {
+  final productsRepository = ref.watch( productRepositoryProvider );
+  
+  return ProducsNotifier(
+    productRepositories: productsRepository
+  );
+
+
+
+});
+
+
+
 
 //Notifier
 class ProducsNotifier extends StateNotifier<ProductsState> {
@@ -27,7 +42,7 @@ class ProducsNotifier extends StateNotifier<ProductsState> {
         offset: state.offset + 10,
         product: [...state.product, ...product]);
   }
-  
+
 }
 
 //STATE
