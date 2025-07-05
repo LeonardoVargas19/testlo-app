@@ -17,6 +17,5 @@ class ProductMapper {
           images.startsWith('http')
               ? images
               : '${Environment.apiUrl}/files/product/$images')),
-      user: UserMapper.userJsonToEntity(json['user']) );
-      
+      user: UserMapper.userJsonToEntity(json['user']));
 }
