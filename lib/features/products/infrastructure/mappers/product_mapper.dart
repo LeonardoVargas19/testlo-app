@@ -13,7 +13,7 @@ class ProductMapper {
       sizes: List<String>.from(json['sizes'].map((size) => size)),
       gender: json['gender'],
       tags: List<String>.from(json['tags'].map((tags) => tags)),
-      images: List<String>.from(json['images'].map((String images) =>
+      images: List<String>.from(json['images'].map((images) =>
           images.startsWith('http')
               ? images
               : '${Environment.apiUrl}/files/product/$images')),

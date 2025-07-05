@@ -27,11 +27,14 @@ class ProductDatasourceImpl extends ProductsDatasources {
   Future<List<Product>> getProductsByPages(
       {int limit = 10, int offset = 0}) async {
     final response =
-        await dio.get<List>('/api/products?limit=$limit&offset=$offset');
+        await dio.get<List>('/products?limit=$limit&offset=$offset');
+
     final List<Product> products = [];
-    for (var products in response.data ?? []) {
-      products.add(ProductMapper.jsontoEntity(products));
+
+    for (var item in response.data ?? []) {
+      products.add(ProductMapper.jsontoEntity(item));
     }
+
     return products;
   }
 }
