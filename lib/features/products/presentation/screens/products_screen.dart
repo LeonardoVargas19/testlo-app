@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:go_router/go_router.dart';
 import 'package:teslo_shop/features/products/presentation/providers/products_provider.dart';
 import 'package:teslo_shop/features/products/presentation/widgets/widgets.dart';
 import 'package:teslo_shop/features/shared/shared.dart';
@@ -21,6 +22,7 @@ class ProductsScreen extends StatelessWidget {
         ],
       ),
       body: _ProductsView(),
+
       floatingActionButton: FloatingActionButton.extended(
         label: const Text('Nuevo producto'),
         icon: const Icon(Icons.add),
@@ -39,11 +41,18 @@ class _ProductsView extends ConsumerStatefulWidget {
 
 class _ProductsViewState extends ConsumerState {
   final ScrollController scrollController = ScrollController();
+  
   @override
   void initState() {
     super.initState();
-    //TODO
-    ref.read(prouductProvider.notifier).loadNextPage();
+   scrollController.addListener((){
+    if((scrollController.position.pixels + 400 ) >= scrollController.position.maxScrollExtent){
+      ref.read(prouductProvider.notifier).loadNextPage();
+    }
+   });
+   
+  
+    
   }
 
   @override
@@ -58,6 +67,7 @@ class _ProductsViewState extends ConsumerState {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: MasonryGridView.count(
+          controller: scrollController,
           physics: const BouncingScrollPhysics(),
           crossAxisCount: 2,
           mainAxisSpacing: 20,
@@ -65,8 +75,11 @@ class _ProductsViewState extends ConsumerState {
           itemCount: productsState.product.length,
           itemBuilder: (context, index) {
             final product = productsState.product[index];
-            return ProductsCard(product: product);
+            return GestureDetector(
+              onTap: ()=> context.push('/product/${product.id}'),
+              child: ProductsCard(product: product));
           }),
+          
     );
   }
 }
