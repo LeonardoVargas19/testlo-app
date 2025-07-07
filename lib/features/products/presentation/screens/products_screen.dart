@@ -22,7 +22,6 @@ class ProductsScreen extends StatelessWidget {
         ],
       ),
       body: _ProductsView(),
-
       floatingActionButton: FloatingActionButton.extended(
         label: const Text('Nuevo producto'),
         icon: const Icon(Icons.add),
@@ -41,18 +40,16 @@ class _ProductsView extends ConsumerStatefulWidget {
 
 class _ProductsViewState extends ConsumerState {
   final ScrollController scrollController = ScrollController();
-  
+
   @override
   void initState() {
     super.initState();
-   scrollController.addListener((){
-    if((scrollController.position.pixels + 400 ) >= scrollController.position.maxScrollExtent){
-      ref.read(prouductProvider.notifier).loadNextPage();
-    }
-   });
-   
-  
-    
+    scrollController.addListener(() {
+      if ((scrollController.position.pixels + 400) >=
+          scrollController.position.maxScrollExtent) {
+        ref.read(prouductsProvider.notifier).loadNextPage();
+      }
+    });
   }
 
   @override
@@ -63,7 +60,7 @@ class _ProductsViewState extends ConsumerState {
 
   @override
   Widget build(BuildContext context) {
-    final productsState = ref.watch(prouductProvider);
+    final productsState = ref.watch(prouductsProvider);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: MasonryGridView.count(
@@ -76,10 +73,9 @@ class _ProductsViewState extends ConsumerState {
           itemBuilder: (context, index) {
             final product = productsState.product[index];
             return GestureDetector(
-              onTap: ()=> context.push('/product/${product.id}'),
-              child: ProductsCard(product: product));
+                onTap: () => context.push('/product/${product.id}'),
+                child: ProductsCard(product: product));
           }),
-          
     );
   }
 }
