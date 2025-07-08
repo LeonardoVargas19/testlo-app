@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class FullScrennLoader extends StatelessWidget {
@@ -8,7 +7,9 @@ class FullScrennLoader extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox.expand(
       child: Center(
-        child: CircularProgressIndicator(strokeWidth: 2,),
+        child: CircularProgressIndicator(
+          strokeWidth: 2,
+        ),
       ),
     );
   }

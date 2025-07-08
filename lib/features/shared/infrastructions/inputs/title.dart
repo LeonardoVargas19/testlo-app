@@ -5,8 +5,6 @@ enum TitleError { empty, format }
 
 // Extend FormzInput and provide the input type and error type.
 class Title extends FormzInput<String, TitleError> {
-
-
   // Call super.pure to represent an unmodified form input.
   const Title.pure() : super.pure('');
 
@@ -18,7 +16,6 @@ class Title extends FormzInput<String, TitleError> {
 
     if (displayError == TitleError.empty) return 'El campo es requerido';
 
-
     return null;
   }
 
@@ -26,7 +23,6 @@ class Title extends FormzInput<String, TitleError> {
   @override
   TitleError? validator(String value) {
     if (value.isEmpty || value.trim().isEmpty) return TitleError.empty;
- 
 
     return null;
   }

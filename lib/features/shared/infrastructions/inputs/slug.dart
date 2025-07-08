@@ -5,8 +5,6 @@ enum SlugError { empty, format }
 
 // Extend FormzInput and provide the input type and error type.
 class Slug extends FormzInput<String, SlugError> {
-
-
   // Call super.pure to represent an unmodified form input.
   const Slug.pure() : super.pure('');
 
@@ -17,7 +15,8 @@ class Slug extends FormzInput<String, SlugError> {
     if (isValid || isPure) return null;
 
     if (displayError == SlugError.empty) return 'El campo es requerido';
-    if (displayError == SlugError.format) return 'El campo no tiene el fomato esperado';
+    if (displayError == SlugError.format)
+      return 'El campo no tiene el fomato esperado';
     return null;
   }
 
@@ -26,7 +25,6 @@ class Slug extends FormzInput<String, SlugError> {
   SlugError? validator(String value) {
     if (value.isEmpty || value.trim().isEmpty) return SlugError.empty;
     if (value.contains("'") || value.contains(' ')) return SlugError.format;
-
 
     return null;
   }
