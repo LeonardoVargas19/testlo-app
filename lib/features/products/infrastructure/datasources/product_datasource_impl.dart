@@ -13,31 +13,21 @@ class ProductDatasourceImpl extends ProductsDatasources {
             headers: {'Authorization': 'Bearer $accesToken'}));
 
   @override
-  Future<Product> createProduct(Map<String, dynamic> productLike) async{
+  Future<Product> createProduct(Map<String, dynamic> productLike) async {
     try {
       final String? producId = productLike['id'];
       final String method = (producId == null) ? 'POST' : 'PATCH';
       final String url = (producId == null) ? '/post' : '/products/$producId';
 
-
       productLike.remove('id');
 
-      final response = await dio.request(
-        url,
-        data: productLike,
-        options: Options(
-          method: method
-        )
-      );
+      final response = await dio.request(url,
+          data: productLike, options: Options(method: method));
       final product = ProductMapper.jsontoEntity(response.data);
       return product;
-
-
     } catch (e) {
       throw Exception();
     }
-
-
   }
 
   @override

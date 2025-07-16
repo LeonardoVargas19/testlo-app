@@ -5,24 +5,18 @@ import 'package:teslo_shop/features/products/domain/domian.dart';
 import 'package:teslo_shop/features/products/presentation/providers/products_provider.dart';
 import 'package:teslo_shop/features/shared/infrastructions/inputs/inputs.dart';
 
-final productFormProvider = StateNotifierProvider.autoDispose.family<ProductFormNotifier,ProducFormState,Product>(
-    (ref,product){
-    //  final createUpdateCallback = ref.watch(productRepositoryProvider).createProduct;
-      final createUpdateCallback = ref.watch( prouductsProvider.notifier).createOrUpdateProduct;
-      return ProductFormNotifier(
-        produc: product,
-        onSumintCallback: createUpdateCallback
-        );
-
-    }
-  
-  );
-
-
-
+final productFormProvider = StateNotifierProvider.autoDispose
+    .family<ProductFormNotifier, ProducFormState, Product>((ref, product) {
+  //  final createUpdateCallback = ref.watch(productRepositoryProvider).createProduct;
+  final createUpdateCallback =
+      ref.watch(prouductsProvider.notifier).createOrUpdateProduct;
+  return ProductFormNotifier(
+      produc: product, onSumintCallback: createUpdateCallback);
+});
 
 class ProductFormNotifier extends StateNotifier<ProducFormState> {
-  final Future< bool > Function(Map<String, dynamic> producLike)? onSumintCallback;
+  final Future<bool> Function(Map<String, dynamic> producLike)?
+      onSumintCallback;
 
   ProductFormNotifier({
     this.onSumintCallback,
@@ -114,7 +108,7 @@ class ProductFormNotifier extends StateNotifier<ProducFormState> {
 
     if (!state.isValid) return false;
 
-     if (onSumintCallback == null) return false;
+    if (onSumintCallback == null) return false;
 
     final productLike = {
       'id': state.id,
@@ -132,10 +126,10 @@ class ProductFormNotifier extends StateNotifier<ProducFormState> {
           .toList()
     };
 
-    try{ 
-       await onSumintCallback!( productLike );
-       return true;
-    }catch (e){
+    try {
+      await onSumintCallback!(productLike);
+      return true;
+    } catch (e) {
       return false;
     }
   }

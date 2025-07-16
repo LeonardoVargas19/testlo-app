@@ -9,22 +9,19 @@ import '../../../auth/presentation/providers/providers.dart';
 
 class ProductScreen extends ConsumerWidget {
   final String productId;
-  
-  
-  const ProductScreen( {super.key, required this.productId} );
 
-  void showSnackbar( BuildContext context){
+  const ProductScreen({super.key, required this.productId});
+
+  void showSnackbar(BuildContext context) {
     ScaffoldMessenger.of(context).clearSnackBars();
-     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Producto Actualizado'))
-     );
+    ScaffoldMessenger.of(context)
+        .showSnackBar(const SnackBar(content: Text('Producto Actualizado')));
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final producState = ref.watch(productProvider(productId));
-    
-    
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Editar Product'),
@@ -37,14 +34,15 @@ class ProductScreen extends ConsumerWidget {
           : _ProductView(product: producState.product!),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          if(producState.product == null ) return;
-          
-         ref.read(productFormProvider(producState.product!).notifier).onFormSumit().then((value){
-          if(!value) return;
-          showSnackbar(context);
-         });
+          if (producState.product == null) return;
 
-
+          ref
+              .read(productFormProvider(producState.product!).notifier)
+              .onFormSumit()
+              .then((value) {
+            if (!value) return;
+            showSnackbar(context);
+          });
         },
         child: Icon(Icons.save_alt_outlined),
       ),
@@ -58,7 +56,7 @@ class _ProductView extends ConsumerWidget {
   const _ProductView({required this.product});
 
   @override
-  Widget build(BuildContext context,WidgetRef ref) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final producForm = ref.watch(productFormProvider(product));
 
     final textStyles = Theme.of(context).textTheme;
@@ -71,7 +69,12 @@ class _ProductView extends ConsumerWidget {
           child: _ImageGallery(images: producForm.images),
         ),
         const SizedBox(height: 10),
-        Center(child: Text(producForm.title.value, style: textStyles.titleSmall,textAlign: TextAlign.center,)),
+        Center(
+            child: Text(
+          producForm.title.value,
+          style: textStyles.titleSmall,
+          textAlign: TextAlign.center,
+        )),
         const SizedBox(height: 10),
         _ProductInformation(product: product),
       ],
@@ -98,50 +101,50 @@ class _ProductInformation extends ConsumerWidget {
             isTopField: true,
             label: 'Nombre',
             initialValue: producForm.title.value,
-            onChanged: ref.read(productFormProvider(product).notifier).onTitleChanged,
+            onChanged:
+                ref.read(productFormProvider(product).notifier).onTitleChanged,
             errorMessage: producForm.title.errorMessage,
           ),
           CustomProductField(
             isTopField: true,
             label: 'Slug',
             initialValue: producForm.slug.value,
-            onChanged: ref.read(productFormProvider(product).notifier).onSlugChanged,
+            onChanged:
+                ref.read(productFormProvider(product).notifier).onSlugChanged,
             errorMessage: producForm.slug.errorMessage,
           ),
           CustomProductField(
             isBottomField: true,
             label: 'Precio',
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
-           initialValue: producForm.price.value.toString(),
-            onChanged:(value)
-            => ref.read(productFormProvider(product).notifier)
-                  .onPriceChanged ( double.tryParse(value) ?? -1),
+            initialValue: producForm.price.value.toString(),
+            onChanged: (value) => ref
+                .read(productFormProvider(product).notifier)
+                .onPriceChanged(double.tryParse(value) ?? -1),
             errorMessage: producForm.price.errorMessage,
           ),
           const SizedBox(height: 15),
-
           const Text('Extras'),
-
-          _SizeSelector(selectedSizes: producForm.size,
-          onSizesChanges: ref.read(productFormProvider(product).notifier).onSizeChange,),
-
+          _SizeSelector(
+            selectedSizes: producForm.size,
+            onSizesChanges:
+                ref.read(productFormProvider(product).notifier).onSizeChange,
+          ),
           const SizedBox(height: 5),
-
           _GenderSelector(
             selectedGender: producForm.gender,
-            onGenderChange: ref.read(productFormProvider(product).notifier).onGenderChange,
-
-            ),
-
+            onGenderChange:
+                ref.read(productFormProvider(product).notifier).onGenderChange,
+          ),
           const SizedBox(height: 15),
-
           CustomProductField(
             isTopField: true,
             label: 'Existencias',
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             initialValue: producForm.inStock.value.toString(),
-            onChanged:(value) => ref.read(productFormProvider(product).notifier)
-            .onStockChanged(int.tryParse(value) ?? -1),
+            onChanged: (value) => ref
+                .read(productFormProvider(product).notifier)
+                .onStockChanged(int.tryParse(value) ?? -1),
             errorMessage: producForm.inStock.errorMessage,
           ),
           CustomProductField(
@@ -149,7 +152,8 @@ class _ProductInformation extends ConsumerWidget {
             label: 'Descripción',
             keyboardType: TextInputType.multiline,
             initialValue: product.description,
-            onChanged: ref.read(productFormProvider(product).notifier).onDescChange,
+            onChanged:
+                ref.read(productFormProvider(product).notifier).onDescChange,
           ),
           CustomProductField(
             isBottomField: true,
@@ -157,7 +161,8 @@ class _ProductInformation extends ConsumerWidget {
             label: 'Tags (Separados por coma)',
             keyboardType: TextInputType.multiline,
             initialValue: product.tags.join(', '),
-            onChanged: ref.read(productFormProvider(product).notifier).onTagChange,
+            onChanged:
+                ref.read(productFormProvider(product).notifier).onTagChange,
           ),
           const SizedBox(height: 100),
         ],
@@ -172,10 +177,8 @@ class _SizeSelector extends StatelessWidget {
 
   final void Function(List<String> selectedSizes) onSizesChanges;
 
-  const _SizeSelector({
-    required this.selectedSizes,
-    required this.onSizesChanges
-    });
+  const _SizeSelector(
+      {required this.selectedSizes, required this.onSizesChanges});
 
   @override
   Widget build(BuildContext context) {
@@ -206,7 +209,8 @@ class _GenderSelector extends StatelessWidget {
 
   final void Function(String selectedGender) onGenderChange;
 
-  const _GenderSelector({required this.selectedGender, required this.onGenderChange});
+  const _GenderSelector(
+      {required this.selectedGender, required this.onGenderChange});
 
   @override
   Widget build(BuildContext context) {
@@ -223,7 +227,7 @@ class _GenderSelector extends StatelessWidget {
         }).toList(),
         selected: {selectedGender},
         onSelectionChanged: (newSelection) {
-         onGenderChange(newSelection.first);
+          onGenderChange(newSelection.first);
         },
       ),
     );
