@@ -194,6 +194,7 @@ class _SizeSelector extends StatelessWidget {
         onSizesChanges(List.from(newSelection));
       },
       multiSelectionEnabled: true,
+      emptySelectionAllowed: true,
     );
   }
 }
