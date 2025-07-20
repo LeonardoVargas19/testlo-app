@@ -133,6 +133,15 @@ class ProductFormNotifier extends StateNotifier<ProducFormState> {
       return false;
     }
   }
+
+
+  void updateProcutImage( String path ){
+    state = state.copyWith(
+      images: [ ...state.images,path]
+    );
+  }
+
+
 }
 
 class ProducFormState {

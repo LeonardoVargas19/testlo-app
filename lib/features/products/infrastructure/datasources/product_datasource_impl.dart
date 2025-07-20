@@ -12,6 +12,33 @@ class ProductDatasourceImpl extends ProductsDatasources {
             baseUrl: Environment.apiUrl,
             headers: {'Authorization': 'Bearer $accesToken'}));
 
+    Future<String> _uploadFile ( String path)async{
+      try {
+        final fileName = path.split('/').last;
+        final FormData data = FormData.fromMap({
+          'file':MultipartFile.fromFileSync(path,filename: fileName),
+          
+        });
+        final response = await dio.post('/file/product',data: data);
+        return response.data['image'];
+
+
+      } catch (e) {
+        throw Exception();
+        
+      }
+    }
+
+
+  Future<List<String>> _uploadPhotos (List<String> photos )async {
+    final photosUpdate = photos.where((element)=>element.contains('/')).toList();
+    final ignorePhotos = photos.where((element)=>!element.contains('/')).toList();
+
+    final List<Future<String>> uploadJob = photosUpdate.map((e)=> _uploadFile(e)).toList();
+    final newImages = await Future.wait(uploadJob);
+    return [...ignorePhotos,...newImages];
+  }
+
   @override
   Future<Product> createProduct(Map<String, dynamic> productLike) async {
     try {
@@ -20,6 +47,7 @@ class ProductDatasourceImpl extends ProductsDatasources {
       final String url = (producId == null) ? '/products' : '/products/$producId';
 
       productLike.remove('id');
+      productLike['images'] = await _uploadPhotos( productLike['images']);
 
       final response = await dio.request(url,
           data: productLike, options: Options(method: method));
